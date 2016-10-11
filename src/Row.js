@@ -4,6 +4,7 @@ const Cell            = require('./Cell');
 const ColumnMetrics   = require('./ColumnMetrics');
 const ColumnUtilsMixin  = require('./ColumnUtils');
 const cellMetaDataShape = require('./PropTypeShapes/CellMetaDataShape');
+const _objectWithoutProperties = require('./utils')._objectWithoutProperties;
 const PropTypes = React.PropTypes;
 
 const CellExpander = React.createClass({
@@ -201,8 +202,12 @@ const Row = React.createClass({
     };
 
     let cells = this.getCells();
+    const restProps = _objectWithoutProperties(this.props, [
+      'idx', 'row', 'isSelected', 'expandedRows', 'cellMetaData', 'subRowDetails',
+      'cellRenderer', 'columns'
+    ]);
     return (
-      <div {...this.props} className={className} style={style} onDragEnter={this.handleDragEnter}>
+      <div {...restProps} className={className} style={style} onDragEnter={this.handleDragEnter}>
         {React.isValidElement(this.props.row) ?
           this.props.row : cells}
       </div>

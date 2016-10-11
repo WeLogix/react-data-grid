@@ -5,6 +5,7 @@ const Viewport             = require('./Viewport');
 const GridScrollMixin      = require('./GridScrollMixin');
 const DOMMetrics           = require('./DOMMetrics');
 const cellMetaDataShape    = require('./PropTypeShapes/CellMetaDataShape');
+const _objectWithoutProperties = require('./utils')._objectWithoutProperties;
 
 const Grid = React.createClass({
   propTypes: {
@@ -79,9 +80,18 @@ const Grid = React.createClass({
   render(): ?ReactElement {
     let headerRows = this.props.headerRows || [{ref: 'row'}];
     let EmptyRowsView = this.props.emptyRowsView;
+    const restProps = _objectWithoutProperties(this.props, [
+      'columns', 'rowGetter', 'rowsCount', 'minHeight',
+      'rowHeight', 'rowKey', 'rowScrollTimeout', 'headerRows',
+      'columnMetrics', 'cellMetaData', 'selectedRows', 'rowSelection',
+      'expandedRows', 'rowOffsetHeight', 'sortColumn', 'sortDirection',
+      'onSort', 'totalWidth', 'onViewportKeydown', 'onViewportKeyup',
+      'onViewportDragStart', 'onViewportDragEnd', 'onViewportDoubleClick',
+      'onColumnResize'
+    ]);
 
     return (
-      <div {...this.props} style={this.getStyle()} className="react-grid-Grid">
+      <div {...restProps} style={this.getStyle()} className="react-grid-Grid">
         <Header
           ref="header"
           columnMetrics={this.props.columnMetrics}

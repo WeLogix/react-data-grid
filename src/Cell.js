@@ -7,6 +7,7 @@ const ExcelColumn = require('./PropTypeShapes/ExcelColumn');
 const isFunction = require('./addons/utils/isFunction');
 const CellMetaDataShape = require('./PropTypeShapes/CellMetaDataShape');
 const SimpleCellFormatter = require('./addons/formatters/SimpleCellFormatter');
+const _objectWithoutProperties = require('./utils')._objectWithoutProperties;
 const ColumnUtils = require('./ColumnUtils');
 
 const Cell = React.createClass({
@@ -20,7 +21,6 @@ const Cell = React.createClass({
     selectedColumn: React.PropTypes.object,
     height: React.PropTypes.number,
     tabIndex: React.PropTypes.number,
-    ref: React.PropTypes.string,
     column: React.PropTypes.shape(ExcelColumn).isRequired,
     value: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number, React.PropTypes.object, React.PropTypes.bool]).isRequired,
     isExpanded: React.PropTypes.bool,
@@ -37,7 +37,6 @@ const Cell = React.createClass({
   getDefaultProps() {
     return {
       tabIndex: -1,
-      ref: 'cell',
       isExpanded: false,
       value: ''
     };
@@ -463,8 +462,12 @@ const Cell = React.createClass({
     let dragHandle = (!this.isActive() && ColumnUtils.canEdit(this.props.column, this.props.rowData, this.props.cellMetaData.enableCellSelect)) ? <div className="drag-handle" draggable="true" onDoubleClick={this.onDragHandleDoubleClick}><span style={{ display: 'none' }}></span></div> : null;
     let events = this.getEvents();
 
+    const restProps = _objectWithoutProperties(this.props, [
+      'rowIdx', 'column', 'formatter', 'rowData', 'selectedColumn', 'isRowSelected',
+      'expandableOptions', 'isExpanded', 'idx', 'cellMetaData'
+    ]);
     return (
-      <div {...this.props} className={className} style={style}   {...events}>
+      <div {...restProps} className={className} style={style}   {...events}>
         {cellContent}
         {dragHandle}
       </div>

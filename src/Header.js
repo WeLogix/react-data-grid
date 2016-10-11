@@ -5,6 +5,7 @@ const shallowCloneObject  = require('./shallowCloneObject');
 const ColumnMetrics       = require('./ColumnMetrics');
 const ColumnUtils         = require('./ColumnUtils');
 const HeaderRow           = require('./HeaderRow');
+const _objectWithoutProperties = require('./utils')._objectWithoutProperties;
 const PropTypes           = React.PropTypes;
 
 type Column = {
@@ -177,10 +178,15 @@ const Header = React.createClass({
       'react-grid-Header--resizing': !!this.state.resizing
     });
     let headerRows = this.getHeaderRows();
+    const restProps = _objectWithoutProperties(this.props, [
+      'columnMetrics', 'onColumnResize', 'totalWidth', 'headerRows',
+      'sortColumn', 'sortDirection', 'draggableHeaderCell', 'onSort',
+      'getValidFilterValues'
+    ]);
 
     return (
 
-      <div {...this.props} style={this.getStyle()} className={className}>
+      <div {...restProps} style={this.getStyle()} className={className}>
         {headerRows}
       </div>
     );

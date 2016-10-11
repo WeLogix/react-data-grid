@@ -241,7 +241,7 @@ const EditorContainer = React.createClass({
     }
 
     if (!this.isBodyClicked(e)) {
-	    // prevent null reference
+      // prevent null reference
       if (this.isViewportClicked(e) || !this.isClickInisdeEditor(e)) {
         this.commit(e);
       }
@@ -284,7 +284,7 @@ const EditorContainer = React.createClass({
 
   render(): ?ReactElement {
     return (
-        <div className={this.getContainerClass()} onBlur={this.handleBlur} onKeyDown={this.onKeyDown} commit={this.commit}>
+        <div className={this.getContainerClass()} onBlur={this.handleBlur} onKeyDown={this.onKeyDown}>
           {this.createEditor()}
           {this.renderStatusIcon()}
         </div>

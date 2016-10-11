@@ -10,6 +10,7 @@ const ColumnMetricsMixin      = require('./ColumnMetricsMixin');
 const RowUtils = require('./RowUtils');
 const ColumnUtils = require('./ColumnUtils');
 const KeyCodes = require('./KeyCodes');
+const _objectWithoutProperties = require('./utils')._objectWithoutProperties;
 import AppConstants from './AppConstants';
 
 if (!Object.assign) {
@@ -872,13 +873,17 @@ const ReactDataGrid = React.createClass({
     if (typeof gridWidth === 'undefined' || isNaN(gridWidth) || gridWidth === 0) {
       gridWidth = '100%';
     }
+    const gridProps = _objectWithoutProperties(this.props, [
+      'enableCellSelect', 'onRowUpdated', 'minColumnWidth', 'columnEquality',
+      'enableRowSelect', 'cellNavigationMode'
+    ]);
     return (
       <div className="react-grid-Container" style={{width: containerWidth}}>
         {toolbar}
         <div className="react-grid-Main">
           <BaseGrid
             ref="base"
-            {...this.props}
+            {...gridProps}
             rowKey={this.props.rowKey}
             headerRows={this.getHeaderRows()}
             columnMetrics={this.state.columnMetrics}

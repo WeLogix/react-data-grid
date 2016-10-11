@@ -7,6 +7,7 @@ const ColumnUtilsMixin  = require('./ColumnUtils');
 const SortableHeaderCell    = require('./addons/cells/headerCells/SortableHeaderCell');
 const FilterableHeaderCell  = require('./addons/cells/headerCells/FilterableHeaderCell');
 const HeaderCellType = require('./HeaderCellType');
+const _objectWithoutProperties = require('./utils')._objectWithoutProperties;
 
 const PropTypes         = React.PropTypes;
 
@@ -155,8 +156,13 @@ const HeaderRow = React.createClass({
     };
 
     let cells = this.getCells();
+    const restProps = _objectWithoutProperties(this.props, [
+      'rowType', 'onColumnResizeEnd', 'columns', 'resizing',
+      'filterable', 'onFilterChange', 'onColumnResize', 'draggableHeaderCell',
+      'sortColumn', 'sortDirection', 'onSort', 'getValidFilterValues'
+    ]);
     return (
-      <div {...this.props} className="react-grid-HeaderRow" onScroll={this.props.onScroll}>
+      <div {...restProps} className="react-grid-HeaderRow" onScroll={this.props.onScroll}>
         <div style={cellsStyle}>
           {cells}
         </div>
