@@ -8,7 +8,7 @@ var RELEASE = argv.release;
 function getPlugins() {
   var nodeEnv = RELEASE ? '"production"' : '"development"';
   var pluginsBase =  [
-    new webpack.DefinePlugin({'process.env.NODE_ENV': nodeEnv, 'global': 'window'})
+    new webpack.DefinePlugin({'process.env.NODE_ENV': nodeEnv})
   ];
 
   if (RELEASE) {
@@ -29,11 +29,11 @@ var config = {
       amd : 'react'
     },
     "react-dom": {
-			root : 'ReactDOM',
-			commonjs : 'react-dom',
-			commonjs2 : 'react-dom',
-			amd : 'react-dom'
-		},
+      root : 'ReactDOM',
+      commonjs : 'react-dom',
+      commonjs2 : 'react-dom',
+      amd : 'react-dom'
+    },
     "moment" : "moment"
   },
   module: {

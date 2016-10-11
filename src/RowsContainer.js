@@ -16,7 +16,13 @@ SimpleRowsContainer.propTypes = {
 class RowsContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.plugins = props.window ? props.window.ReactDataGridPlugins : window.ReactDataGridPlugins;
+    if (props.window) {
+      this.plugins = props.window.ReactDataGridPlugins;
+    } else if (typeof window !== 'undefined') {
+      this.plugins = window.ReactDataGridPlugins;
+    } else if (typeof global !== 'undefined') {
+      this.plugins = global.ReactDataGridPlugins;
+    }
     this.hasContextMenu = this.hasContextMenu.bind(this);
     this.renderRowsWithContextMenu = this.renderRowsWithContextMenu.bind(this);
     this.getContextMenuContainer = this.getContextMenuContainer.bind(this);

@@ -7,5 +7,9 @@ const Menu = require('./menu');
 import Draggable from './draggable';
 const Filters = require('./cells/headerCells/filters');
 
-window.ReactDataGridPlugins = {Editors, Formatters, Toolbar, Menu, Data, ToolsPanel, Draggable, Filters};
+if (typeof window !== 'undefined') {
+  window.ReactDataGridPlugins = {Editors, Formatters, Toolbar, Menu, Data, ToolsPanel, Draggable, Filters};
+} else if (typeof global !== 'undefined') {
+  global.ReactDataGridPlugins = {Editors, Formatters, Toolbar, Menu, Data, ToolsPanel, Draggable, Filters};
+}
 export {Editors, Formatters, Toolbar, Menu, Data, ToolsPanel, Draggable, Filters};
